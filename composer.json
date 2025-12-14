@@ -1,0 +1,20 @@
+{
+    "name": "luminarix/tempest-nextjs-starter",
+    "description": "Full-stack starter with Tempest PHP backend and Next.js frontend",
+    "type": "project",
+    "license": "MIT",
+    "keywords": ["tempest", "nextjs", "fullstack", "starter", "docker"],
+    "require": {
+        "php": "^8.4"
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "@php -r \"copy('backend/.env.example', 'backend/.env');\"",
+            "@php -r \"copy('frontend/.env.example', 'frontend/.env');\"",
+            "@echo 'Project created! Run: docker compose up -d'"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
