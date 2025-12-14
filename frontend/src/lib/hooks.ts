@@ -1,0 +1,9 @@
+import { useQuery } from "@tanstack/react-query";
+import { fetchVersion } from "./api";
+
+export function useVersion() {
+  return useQuery({
+    queryKey: ["version"],
+    queryFn: fetchVersion,
+  });
+}

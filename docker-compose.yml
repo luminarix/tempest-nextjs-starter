@@ -1,0 +1,30 @@
+x-backend-volume: &backend-volume ./backend:/var/www/html
+x-frontend-volume: &frontend-volume ./frontend:/app
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Backend.dockerfile
+    container_name: tempest
+    working_dir: /var/www/html
+    ports:
+      - "80:8080"
+      - "443:8443"
+    volumes:
+      - *backend-volume
+    environment:
+      SSL_MODE: "mixed"
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Frontend.dockerfile
+    container_name: nextjs
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    volumes:
+      - *frontend-volume
+    environment:
+      NODE_ENV: development

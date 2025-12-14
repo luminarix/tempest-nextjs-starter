@@ -1,0 +1,6 @@
+frontend/node_modules
+frontend/.next
+backend/vendor
+**/.git
+**/.idea
+**/.claude
