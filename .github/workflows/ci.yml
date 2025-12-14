@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    name: Tests & QA
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Copy environment files
+        run: |
+          cp backend/.env.example backend/.env
+          cp frontend/.env.example frontend/.env
+
+      - name: Start Docker containers
+        run: docker compose up -d --wait
+
+      - name: Wait for services to be healthy
+        run: |
+          echo "Waiting for backend to be ready..."
+          timeout 60 bash -c 'until docker compose exec -T tempest php -v > /dev/null 2>&1; do sleep 2; done'
+
+      - name: Run PHPUnit tests
+        run: docker compose exec -T tempest composer phpunit
+
+      - name: Run QA checks (format, test, lint)
+        run: docker compose exec -T tempest composer qa
+
+      - name: Stop containers
+        if: always()
+        run: docker compose down
