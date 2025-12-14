@@ -1,20 +1,27 @@
 {
-    "name": "luminarix/tempest-nextjs-starter",
-    "description": "Full-stack starter with Tempest PHP backend and Next.js frontend",
-    "type": "project",
-    "license": "MIT",
-    "keywords": ["tempest", "nextjs", "fullstack", "starter", "docker"],
-    "require": {
-        "php": "^8.4"
-    },
-    "scripts": {
-        "post-create-project-cmd": [
-            "cp backend/.env.example backend/.env",
-            "cp frontend/.env.example frontend/.env",
-            "echo 'Project created! Run: docker compose up -d'"
-        ]
-    },
-    "config": {
-        "sort-packages": true
-    }
+  "name": "luminarix/tempest-nextjs-starter",
+  "description": "Full-stack starter with Tempest PHP backend and Next.js frontend",
+  "type": "project",
+  "license": "MIT",
+  "keywords": [
+    "tempest",
+    "nextjs",
+    "fullstack",
+    "starter",
+    "docker"
+  ],
+  "require": {
+    "php": "^8.4"
+  },
+  "scripts": {
+    "post-create-project-cmd": [
+      "cp backend/.env.example backend/.env",
+      "cp frontend/.env.example frontend/.env",
+      "rm -rf composer.json composer.lock vendor",
+      "@php -r \"echo PHP_EOL . chr(27) . '[32m✓ Project created!' . chr(27) . '[0m' . PHP_EOL . PHP_EOL . '  Run: ' . chr(27) . '[36mdocker compose up -d' . chr(27) . '[0m' . PHP_EOL . PHP_EOL;\""
+    ]
+  },
+  "config": {
+    "sort-packages": true
+  }
 }
