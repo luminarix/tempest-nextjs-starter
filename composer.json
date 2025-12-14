@@ -9,9 +9,9 @@
     },
     "scripts": {
         "post-create-project-cmd": [
-            "@php -r \"copy('backend/.env.example', 'backend/.env');\"",
-            "@php -r \"copy('frontend/.env.example', 'frontend/.env');\"",
-            "@echo 'Project created! Run: docker compose up -d'"
+            "cp backend/.env.example backend/.env",
+            "cp frontend/.env.example frontend/.env",
+            "echo 'Project created! Run: docker compose up -d'"
         ]
     },
     "config": {

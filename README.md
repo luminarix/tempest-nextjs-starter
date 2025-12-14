@@ -20,27 +20,31 @@ A modern full-stack starter template combining **Tempest PHP Framework** for the
 ## Prerequisites
 
 - [Docker](https://docs.docker.com/get-docker/) and Docker Compose
+- PHP 8.4+ and Composer (for installation)
 - (Optional for local development without Docker):
-  - PHP 8.4+
-  - Node.js 20+ with pnpm or pnpm (preferred)
-  - Composer
+  - Node.js 24+ with pnpm
 
 ## Quick Start
 
-### 1. Clone and Configure
+### Option 1: Composer Create-Project (Recommended)
 
 ```bash
-git clone <repository-url> my-project # Or use the Github "Use this template" button and clone your repository
+composer create-project luminarix/tempest-nextjs-starter my-project
+cd my-project
+docker compose up -d
+```
+
+### Option 2: Clone from GitHub
+
+```bash
+git clone https://github.com/luminarix/tempest-nextjs-starter.git my-project
 cd my-project
 
 # Copy environment files
 cp backend/.env.example backend/.env
 cp frontend/.env.example frontend/.env
-```
 
-### 2. Start with Docker
-
-```bash
+# Start with Docker
 docker compose up -d
 ```
 
@@ -48,11 +52,6 @@ That's it! Your application is now running:
 
 - **Frontend**: http://localhost:3000
 - **Backend API**: http://localhost
-
-### 3. Verify Installation
-
-Open http://localhost:3000 in your browser for the frontend.
-Open http://localhost in your browser for the backend API.
 
 ## Local Development (Without Docker)
 
@@ -140,11 +139,13 @@ Run from the `nextjs` container:
 
 | Command | Description |
 |---------|-------------|
-| `pnpm run dev` | Start development server |
-| `pnpm run build` | Create production build |
+| `pnpm qa` | Run all checks (lint, test, build) |
+| `pnpm test` | Run tests with Vitest |
+| `pnpm dev` | Start development server |
+| `pnpm build` | Create production build |
 | `pnpm start` | Run production server |
-| `pnpm run lint` | Lint with Biome |
-| `pnpm run format` | Format with Biome |
+| `pnpm lint` | Lint with Biome |
+| `pnpm format` | Format with Biome |
 
 ### Docker
 
@@ -156,7 +157,7 @@ Run from the project root:
 | `docker compose down` | Stop all services |
 | `docker compose logs -f` | View logs |
 | `docker compose exec tempest bash` | Shell into backend container |
-| `docker compose exec nextjs bash` | Shell into frontend container |
+| `docker compose exec nextjs sh` | Shell into frontend container |
 
 ## Environment Configuration
 
@@ -171,7 +172,7 @@ FRONTEND_URL=http://localhost:3000  # CORS allowed origin
 ### Frontend (`frontend/.env`)
 
 ```env
-API_URL=http://php:8080              # Server-side (Docker internal, use localhost if you don't use Docker)
+API_URL=http://tempest:8080           # Server-side (Docker internal, use localhost if you don't use Docker)
 NEXT_PUBLIC_API_URL=http://localhost  # Client-side (browser)
 ```
 
@@ -180,16 +181,24 @@ NEXT_PUBLIC_API_URL=http://localhost  # Client-side (browser)
 ### Backend Tests
 
 ```bash
-cd backend
-
 # Run all tests
-docker exec tempest composer phpunit
+docker compose exec tempest composer phpunit
 
 # Run specific test file
-docker exec tempest ./vendor/bin/phpunit tests/ApiTest.php
+docker compose exec tempest ./vendor/bin/phpunit tests/ApiTest.php
 
 # Run specific test method
-docker exec tempest ./vendor/bin/phpunit --filter testVersionEndpoint
+docker compose exec tempest ./vendor/bin/phpunit --filter testVersionEndpoint
+```
+
+### Frontend Tests
+
+```bash
+# Run all tests
+docker compose exec nextjs pnpm test
+
+# Run tests in watch mode
+docker compose exec nextjs pnpm test:watch
 ```
 
 ## Code Quality
@@ -197,11 +206,11 @@ docker exec tempest ./vendor/bin/phpunit --filter testVersionEndpoint
 Both backend and frontend have pre-configured linting and formatting:
 
 ```bash
-# Backend - run all quality checks
-cd backend && composer qa
+# Backend - run all quality checks (format, test, lint)
+docker compose exec tempest composer qa
 
-# Frontend - lint and format
-cd frontend && pnpm run lint && pnpm run format
+# Frontend - run all quality checks (lint, test, build)
+docker compose exec nextjs pnpm qa
 ```
 
 ## CORS Configuration

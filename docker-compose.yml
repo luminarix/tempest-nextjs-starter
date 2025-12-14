@@ -2,7 +2,7 @@ x-backend-volume: &backend-volume ./backend:/var/www/html
 x-frontend-volume: &frontend-volume ./frontend:/app
 
 services:
-  php:
+  tempest:
     build:
       context: .
       dockerfile: Backend.dockerfile
@@ -16,7 +16,7 @@ services:
     environment:
       SSL_MODE: "mixed"
 
-  frontend:
+  nextjs:
     build:
       context: .
       dockerfile: Frontend.dockerfile

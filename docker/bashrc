@@ -1,0 +1,13 @@
+case "$TERM" in
+    xterm-color|*-256color) color_prompt=yes;;
+esac
+PS1='${debian_chroot:+($debian_chroot)}\[\033[01;31m\]\u\[\033[01;33m\]@\[\033[01;36m\]\h \[\033[01;33m\]\w \[\033[01;35m\]\$ \[\033[00m\]'
+case "$TERM" in
+xterm*|rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+    ;;
+*)
+    ;;
+esac
+
+export PS1="$PS1\[\e]1337;CurrentDir="'$(pwd)\a\]'

@@ -5,3 +5,7 @@ USER root
 RUN install-php-extensions intl ftp
 
 COPY --chmod=755 docker/entrypoint.d/ /etc/entrypoint.d/
+
+USER www-data
+
+COPY docker/bashrc /var/www/.bashrc

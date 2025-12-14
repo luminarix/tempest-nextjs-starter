@@ -4,7 +4,7 @@ import { fetchVersion } from "./api";
 describe("API Integration", () => {
   beforeAll(() => {
     // Use Docker internal URL when running in container
-    process.env.NEXT_PUBLIC_API_URL = "http://php:8080";
+    process.env.NEXT_PUBLIC_API_URL = "http://tempest:8080";
   });
 
   afterAll(() => {
