@@ -18,7 +18,7 @@
       "cp backend/.env.example backend/.env",
       "cp frontend/.env.example frontend/.env",
       "rm -rf composer.json composer.lock vendor",
-      "@php -r \"echo PHP_EOL . chr(27) . '[32m✓ Project created!' . chr(27) . '[0m' . PHP_EOL . PHP_EOL . '  Run: ' . chr(27) . '[36mdocker compose up -d' . chr(27) . '[0m' . PHP_EOL . PHP_EOL;\""
+      "echo && echo '\\033[32m✓ Project created!\\033[0m' && echo && echo '  Run:' && echo \"    \\033[36mcd $(basename $PWD)\\033[0m\" && echo '    \\033[36mdocker compose up -d\\033[0m' && echo"
     ]
   },
   "config": {
