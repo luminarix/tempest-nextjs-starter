@@ -20,6 +20,9 @@ jobs:
           cp backend/.env.example backend/.env
           cp frontend/.env.example frontend/.env
 
+      - name: Fix permissions for www-data
+        run: sudo chown -R 33:33 backend
+
       - name: Start Docker containers
         run: docker compose up -d --build --wait
 
